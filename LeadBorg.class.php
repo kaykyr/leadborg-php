@@ -30,7 +30,7 @@
 
             if ($this->DEBUG){
                 print("[DEBUG]: \n");
-                print("Requested URL: " . $url . "\n");
+                print("Requested URL: ".$url."\n");
             }
 
             return file_get_contents($url);
