@@ -1,31 +1,31 @@
 <?php
     class LeadBorg{
-		public $TOKEN;
-        public $DEBUG;
-        public $DATA;
+	    public $TOKEN;
+	    public $DEBUG;
+	    public $DATA;
 
-		const API_URL      = "https://api.leadb.org:9090";
-		const SEEN         = "seen";
-		const SEND_MESSAGE = "sendmessage";
-		const SEND_MEDIA   = "sendmedia";
-		const GET_UNREAD   = "getunread";
-		const GET_ALL      = "getall";
-		const GET_HISTORY  = "gethistory";
-		const PHONE_DOMAIN = "@c.us";
-		const GROUP_DOMAIN = "@g.us";
+	    const API_URL      = "https://api.leadb.org:9090";
+	    const SEEN         = "seen";
+	    const SEND_MESSAGE = "sendmessage";
+	    const SEND_MEDIA   = "sendmedia";
+	    const GET_UNREAD   = "getunread";
+	    const GET_ALL      = "getall";
+	    const GET_HISTORY  = "gethistory";
+	    const PHONE_DOMAIN = "@c.us";
+	    const GROUP_DOMAIN = "@g.us";
 
-		public function __construct(string $token, bool $debug = false){
+	    public function __construct(string $token, bool $debug = false){
 			$this->TOKEN = $token;
             $this->DEBUG = $debug;
             return $this;
 		}
 
-		public function createUrl(string $method, array $args = []){
+	    public function createUrl(string $method, array $args = []){
             $args['token'] = $this->TOKEN;
             return self::API_URL.'/?cmd='.$method.'&'.http_build_query($args);
         }
 
-		public function query(string $method, array $args){
+	    public function query(string $method, array $args){
             $url = $this->createUrl($method, $args);
 
             if ($this->DEBUG){
@@ -100,4 +100,4 @@
                 $callback($this, $data);
             }
         }
-	}
+    }
