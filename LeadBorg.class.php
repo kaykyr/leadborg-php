@@ -1,6 +1,5 @@
 <?php
-class LeadBorg
-{
+class LeadBorg{
 	public $TOKEN;
 	public $DEBUG;
 	public $DATA;
@@ -15,21 +14,18 @@ class LeadBorg
 	const PHONE_DOMAIN = "@c.us";
 	const GROUP_DOMAIN = "@g.us";
 
-	public function __construct(string $token, bool $debug = false)
-	{
+	public function __construct(string $token, bool $debug = false){
 		$this->TOKEN = $token;
 		$this->DEBUG = $debug;
 		return $this;
 	}
 
-	public function createUrl(string $method, array $args = [])
-	{
+	public function createUrl(string $method, array $args = []){
 		$args['token'] = $this->TOKEN;
 		return self::API_URL . '/?cmd=' . $method . '&' . http_build_query($args);
 	}
 
-	public function query(string $method, array $args)
-	{
+	public function query(string $method, array $args){
 		$url = $this->createUrl($method, $args);
 
 		if ($this->DEBUG) {
@@ -40,8 +36,7 @@ class LeadBorg
 		return file_get_contents($url);
 	}
 
-	public function sendMessage(string $chatId, string $message)
-	{
+	public function sendMessage(string $chatId, string $message){
 		if (strpos($chatId, '-') !== false)
 			$chatId .= self::GROUP_DOMAIN;
 		else
@@ -60,8 +55,7 @@ class LeadBorg
 			return false;
 	}
 
-	public function sendMedia(string $chatId, string $path, string $caption)
-	{
+	public function sendMedia(string $chatId, string $path, string $caption){
 		if (strpos($chatId, '-') !== false)
 			$chatId .= self::GROUP_DOMAIN;
 		else
@@ -80,8 +74,7 @@ class LeadBorg
 			return false;
 	}
 
-	public function sendSeen(string $chatId)
-	{
+	public function sendSeen(string $chatId){
 		if (strpos($chatId, '-') !== false)
 			$chatId .= self::GROUP_DOMAIN;
 		else
@@ -100,8 +93,7 @@ class LeadBorg
 			return false;
 	}
 
-	public function onReceiveMessage($callback)
-	{
+	public function onReceiveMessage($callback){
 		if ($_GET['token'] == $this->TOKEN) {
 			$data = json_decode(base64_decode($_GET['data']));
 			self::sendSeen($data->chatId->user);
